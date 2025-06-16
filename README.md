@@ -1,7 +1,7 @@
 WebDAVSync
 ======
 
-A tool to copy all files from source webdav to target webdav fastly.
+A tool to copy all files from source webdav to target webdav quickly.
 
 Usage
 ------
