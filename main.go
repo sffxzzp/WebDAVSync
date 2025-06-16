@@ -4,9 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/fs"
-	"net/url"
 	"os"
-	"strings"
 
 	"github.com/studio-b12/gowebdav"
 )
@@ -127,23 +125,13 @@ func (d *dav) Read(remoteFile string) ([]byte, error) {
 
 func (d *dav) Write(remoteFile string, data []byte) error {
 	var err error
-	encodedPath := encodePath(remoteFile)
 	for i := 0; i < 3; i++ {
-		err = d.Client.Write(encodedPath, data, 0644)
+		err = d.Client.Write(remoteFile, data, 0644)
 		if err == nil {
 			return nil
 		}
 	}
 	return err
-}
-
-func encodePath(path string) string {
-	// 对每一段进行编码，防止中文、空格、下划线等问题
-	parts := strings.Split(path, "/")
-	for i, p := range parts {
-		parts[i] = url.PathEscape(p)
-	}
-	return strings.Join(parts, "/")
 }
 
 func readConfig() config {
